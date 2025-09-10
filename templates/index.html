@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Upcoming Events</h1>
+  {% if events %}
+    <div class="grid">
+      {% for e in events %}
+        <div class="card">
+          <h3>{{ e.title }}</h3>
+          <p class="date">{{ e.event_date.strftime('%d %b %Y') if e.event_date else '' }}</p>
+          <p>{{ e.description }}</p>
+          
+          {% if e.id in registered_event_ids %}
+            <!-- Already Registered -->
+            <button class="btn btn-secondary" disabled>
+              ✅ Already Registered
+            </button>
+          {% else %}
+            <!-- Register Button -->
+            <a class="btn" href="{{ url_for('register_event', event_id=e.id) }}">
+              Register for this event
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No events found. Make sure you ran the SQL to seed sample events.</p>
+  {% endif %}
+{% endblock %}

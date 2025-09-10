@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Change Event Registration</h1>
+  <form method="POST">
+    <label for="new_event_id">Select New Event:</label>
+    <select name="new_event_id" id="new_event_id" required>
+      {% for e in events %}
+        <option value="{{ e.id }}">{{ e.title }} — {{ e.event_date.strftime('%d %b %Y') }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="{{ url_for('my_dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

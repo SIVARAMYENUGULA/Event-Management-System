@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Registrations</h1>
+
+  {% if regs %}
+    <ul class="list">
+      {% for r in regs %}
+        <li>
+          <strong>{{ r.title }}</strong> — {{ r.event_date.strftime('%d %b %Y') }}<br>
+          <small>Registered at {{ r.registered_at.strftime('%d %b %Y %H:%M') }}</small>
+          <br>
+          <small><em>Event ID: {{ r.event_id }}</em></small>
+          <br><br>
+
+          <!-- Cancel Registration -->
+          <form action="{{ url_for('cancel_registration', event_id=r.event_id) }}" 
+                method="POST" 
+                style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm">❌ Cancel</button>
+          </form>
+
+          <!-- Change Event -->
+          <a href="{{ url_for('update_registration', current_event_id=r.event_id) }}" 
+             class="btn btn-primary btn-sm">
+            ✏️ Change Event
+          </a>
+        </li>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You haven't registered for any events yet.</p>
+  {% endif %}
+{% endblock %}
